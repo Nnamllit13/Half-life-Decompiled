@@ -84055,7 +84055,7 @@ void __cdecl FUN_1009ac3c(int param_1,int param_2)
   uint *puVar3;
   
   puVar3 = (uint *)(param_1 + (param_2 / 0x20) * 4);
-  iVar1 = FUN_1009f166(*puVar3,1 << (0x1fU - (char)(param_2 % 0x20) & 0x1f),puVar3);
+  iVar1 = addWithCarry(*puVar3,1 << (0x1fU - (char)(param_2 % 0x20) & 0x1f),puVar3);
   iVar2 = param_2 / 0x20 + -1;
   if (-1 < iVar2) {
     puVar3 = (uint *)(param_1 + iVar2 * 4);
@@ -84063,7 +84063,7 @@ void __cdecl FUN_1009ac3c(int param_1,int param_2)
       if (iVar1 == 0) {
         return;
       }
-      iVar1 = FUN_1009f166(*puVar3,1,puVar3);
+      iVar1 = addWithCarry(*puVar3,1,puVar3);
       iVar2 = iVar2 + -1;
       puVar3 = puVar3 + -1;
     } while (-1 < iVar2);
@@ -88607,19 +88607,19 @@ LAB_1009f12c:
 
 
 
-undefined4 __cdecl FUN_1009f166(uint param_1,uint param_2,uint *param_3)
+undefined4 __cdecl addWithCarry(uint firstNumber,uint secondNumber,uint *result)
 
 {
-  uint uVar1;
-  undefined4 uVar2;
+  undefined4 carry;
+  uint sum;
   
-  uVar2 = 0;
-  uVar1 = param_1 + param_2;
-  if ((uVar1 < param_1) || (uVar1 < param_2)) {
-    uVar2 = 1;
+  carry = 0;
+  sum = firstNumber + secondNumber;
+  if ((sum < firstNumber) || (sum < secondNumber)) {
+    carry = 1;
   }
-  *param_3 = uVar1;
-  return uVar2;
+  *result = sum;
+  return carry;
 }
 
 
@@ -88629,23 +88629,23 @@ undefined4 __cdecl FUN_1009f166(uint param_1,uint param_2,uint *param_3)
 // 
 // Library: Visual Studio 2003 Release
 
-void __cdecl ___add_12(uint *param_1,uint *param_2)
+void __cdecl ___add_12(uint *firstNumber,uint *secondNumber)
 
 {
-  int iVar1;
+  int carry;
   
-  iVar1 = FUN_1009f166(*param_1,*param_2,param_1);
-  if (iVar1 != 0) {
-    iVar1 = FUN_1009f166(param_1[1],1,param_1 + 1);
-    if (iVar1 != 0) {
-      param_1[2] = param_1[2] + 1;
+  carry = addWithCarry(*firstNumber,*secondNumber,firstNumber);
+  if (carry != 0) {
+    carry = addWithCarry(firstNumber[1],1,firstNumber + 1);
+    if (carry != 0) {
+      firstNumber[2] = firstNumber[2] + 1;
     }
   }
-  iVar1 = FUN_1009f166(param_1[1],param_2[1],param_1 + 1);
-  if (iVar1 != 0) {
-    param_1[2] = param_1[2] + 1;
+  carry = addWithCarry(firstNumber[1],secondNumber[1],firstNumber + 1);
+  if (carry != 0) {
+    firstNumber[2] = firstNumber[2] + 1;
   }
-  FUN_1009f166(param_1[2],param_2[2],param_1 + 2);
+  addWithCarry(firstNumber[2],secondNumber[2],firstNumber + 2);
   return;
 }
 
@@ -88684,13 +88684,13 @@ void __cdecl FUN_1009f213(uint *param_1)
 void __cdecl FUN_1009f240(char *param_1,int param_2,uint *param_3)
 
 {
-  uint *puVar1;
+  uint *firstNumber;
   uint local_14;
   uint local_10;
   uint local_c;
   int local_8;
   
-  puVar1 = param_3;
+  firstNumber = param_3;
   local_8 = 0x404e;
   *param_3 = 0;
   param_3[1] = 0;
@@ -88698,32 +88698,32 @@ void __cdecl FUN_1009f240(char *param_1,int param_2,uint *param_3)
   if (param_2 != 0) {
     param_3 = (uint *)param_2;
     do {
-      local_14 = *puVar1;
-      local_10 = puVar1[1];
-      local_c = puVar1[2];
-      FUN_1009f1e5(puVar1);
-      FUN_1009f1e5(puVar1);
-      ___add_12(puVar1,&local_14);
-      FUN_1009f1e5(puVar1);
+      local_14 = *firstNumber;
+      local_10 = firstNumber[1];
+      local_c = firstNumber[2];
+      FUN_1009f1e5(firstNumber);
+      FUN_1009f1e5(firstNumber);
+      ___add_12(firstNumber,&local_14);
+      FUN_1009f1e5(firstNumber);
       local_10 = 0;
       local_c = 0;
       local_14 = (uint)*param_1;
-      ___add_12(puVar1,&local_14);
+      ___add_12(firstNumber,&local_14);
       param_1 = param_1 + 1;
       param_3 = (uint *)((int)param_3 + -1);
     } while (param_3 != (uint *)0x0);
   }
-  while (puVar1[2] == 0) {
-    puVar1[2] = puVar1[1] >> 0x10;
+  while (firstNumber[2] == 0) {
+    firstNumber[2] = firstNumber[1] >> 0x10;
     local_8 = local_8 + 0xfff0;
-    puVar1[1] = *puVar1 >> 0x10 | puVar1[1] << 0x10;
-    *puVar1 = *puVar1 << 0x10;
+    firstNumber[1] = *firstNumber >> 0x10 | firstNumber[1] << 0x10;
+    *firstNumber = *firstNumber << 0x10;
   }
-  while ((puVar1[2] & 0x8000) == 0) {
-    FUN_1009f1e5(puVar1);
+  while ((firstNumber[2] & 0x8000) == 0) {
+    FUN_1009f1e5(firstNumber);
     local_8 = local_8 + 0xffff;
   }
-  *(undefined2 *)((int)puVar1 + 10) = (undefined2)local_8;
+  *(undefined2 *)((int)firstNumber + 10) = (undefined2)local_8;
   return;
 }
 
@@ -88796,7 +88796,7 @@ LAB_1009f3aa:
           local_10 = piVar5 + 2;
           local_1c = param_2;
           do {
-            iVar8 = FUN_1009f166(*(uint *)(local_8 + -2),(uint)*local_c * (uint)*(ushort *)local_10,
+            iVar8 = addWithCarry(*(uint *)(local_8 + -2),(uint)*local_c * (uint)*(ushort *)local_10,
                                  (uint *)(local_8 + -2));
             if (iVar8 != 0) {
               *local_8 = *local_8 + 1;
