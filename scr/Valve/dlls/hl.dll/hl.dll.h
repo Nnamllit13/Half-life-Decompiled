@@ -15,6 +15,7 @@ typedef unsigned char    undefined1;
 typedef unsigned short    undefined2;
 typedef unsigned int    undefined4;
 typedef unsigned long long    undefined6;
+typedef unsigned long long    undefined7;
 typedef unsigned long long    undefined8;
 typedef unsigned short    ushort;
 typedef short    wchar_t;
@@ -78,6 +79,10 @@ struct _cpinfo {
 
 typedef struct _cpinfo * LPCPINFO;
 
+typedef ulong DWORD;
+
+typedef DWORD LCTYPE;
+
 typedef int BOOL;
 
 typedef char CHAR;
@@ -86,87 +91,13 @@ typedef CHAR * LPSTR;
 
 typedef BOOL (* LOCALE_ENUMPROCA)(LPSTR);
 
-typedef ulong DWORD;
-
-typedef DWORD LCTYPE;
-
-typedef struct _STARTUPINFOA _STARTUPINFOA, *P_STARTUPINFOA;
-
-typedef ushort WORD;
-
-typedef BYTE * LPBYTE;
-
-typedef void * HANDLE;
-
-struct _STARTUPINFOA {
-    DWORD cb;
-    LPSTR lpReserved;
-    LPSTR lpDesktop;
-    LPSTR lpTitle;
-    DWORD dwX;
-    DWORD dwY;
-    DWORD dwXSize;
-    DWORD dwYSize;
-    DWORD dwXCountChars;
-    DWORD dwYCountChars;
-    DWORD dwFillAttribute;
-    DWORD dwFlags;
-    WORD wShowWindow;
-    WORD cbReserved2;
-    LPBYTE lpReserved2;
-    HANDLE hStdInput;
-    HANDLE hStdOutput;
-    HANDLE hStdError;
-};
-
-typedef struct _SECURITY_ATTRIBUTES _SECURITY_ATTRIBUTES, *P_SECURITY_ATTRIBUTES;
-
-typedef void * LPVOID;
-
-struct _SECURITY_ATTRIBUTES {
-    DWORD nLength;
-    LPVOID lpSecurityDescriptor;
-    BOOL bInheritHandle;
-};
-
-typedef struct _STARTUPINFOA * LPSTARTUPINFOA;
-
-typedef struct _TIME_ZONE_INFORMATION _TIME_ZONE_INFORMATION, *P_TIME_ZONE_INFORMATION;
-
-typedef long LONG;
-
-typedef wchar_t WCHAR;
-
-typedef struct _SYSTEMTIME _SYSTEMTIME, *P_SYSTEMTIME;
-
-typedef struct _SYSTEMTIME SYSTEMTIME;
-
-struct _SYSTEMTIME {
-    WORD wYear;
-    WORD wMonth;
-    WORD wDayOfWeek;
-    WORD wDay;
-    WORD wHour;
-    WORD wMinute;
-    WORD wSecond;
-    WORD wMilliseconds;
-};
-
-struct _TIME_ZONE_INFORMATION {
-    LONG Bias;
-    WCHAR StandardName[32];
-    SYSTEMTIME StandardDate;
-    LONG StandardBias;
-    WCHAR DaylightName[32];
-    SYSTEMTIME DaylightDate;
-    LONG DaylightBias;
-};
-
 typedef struct _OVERLAPPED _OVERLAPPED, *P_OVERLAPPED;
 
 typedef ulong ULONG_PTR;
 
 typedef union _union_518 _union_518, *P_union_518;
+
+typedef void * HANDLE;
 
 typedef struct _struct_519 _struct_519, *P_struct_519;
 
@@ -189,7 +120,81 @@ struct _OVERLAPPED {
     HANDLE hEvent;
 };
 
+typedef struct _SECURITY_ATTRIBUTES _SECURITY_ATTRIBUTES, *P_SECURITY_ATTRIBUTES;
+
+typedef void * LPVOID;
+
+struct _SECURITY_ATTRIBUTES {
+    DWORD nLength;
+    LPVOID lpSecurityDescriptor;
+    BOOL bInheritHandle;
+};
+
+typedef struct _TIME_ZONE_INFORMATION _TIME_ZONE_INFORMATION, *P_TIME_ZONE_INFORMATION;
+
 typedef struct _TIME_ZONE_INFORMATION * LPTIME_ZONE_INFORMATION;
+
+typedef long LONG;
+
+typedef wchar_t WCHAR;
+
+typedef struct _SYSTEMTIME _SYSTEMTIME, *P_SYSTEMTIME;
+
+typedef struct _SYSTEMTIME SYSTEMTIME;
+
+typedef ushort WORD;
+
+struct _SYSTEMTIME {
+    WORD wYear;
+    WORD wMonth;
+    WORD wDayOfWeek;
+    WORD wDay;
+    WORD wHour;
+    WORD wMinute;
+    WORD wSecond;
+    WORD wMilliseconds;
+};
+
+struct _TIME_ZONE_INFORMATION {
+    LONG Bias;
+    WCHAR StandardName[32];
+    SYSTEMTIME StandardDate;
+    LONG StandardBias;
+    WCHAR DaylightName[32];
+    SYSTEMTIME DaylightDate;
+    LONG DaylightBias;
+};
+
+typedef struct _OVERLAPPED * LPOVERLAPPED;
+
+typedef struct _SECURITY_ATTRIBUTES * LPSECURITY_ATTRIBUTES;
+
+typedef struct _STARTUPINFOA _STARTUPINFOA, *P_STARTUPINFOA;
+
+typedef BYTE * LPBYTE;
+
+struct _STARTUPINFOA {
+    DWORD cb;
+    LPSTR lpReserved;
+    LPSTR lpDesktop;
+    LPSTR lpTitle;
+    DWORD dwX;
+    DWORD dwY;
+    DWORD dwXSize;
+    DWORD dwYSize;
+    DWORD dwXCountChars;
+    DWORD dwYCountChars;
+    DWORD dwFillAttribute;
+    DWORD dwFlags;
+    WORD wShowWindow;
+    WORD cbReserved2;
+    LPBYTE lpReserved2;
+    HANDLE hStdInput;
+    HANDLE hStdOutput;
+    HANDLE hStdError;
+};
+
+typedef struct _STARTUPINFOA * LPSTARTUPINFOA;
 
 typedef struct _RTL_CRITICAL_SECTION _RTL_CRITICAL_SECTION, *P_RTL_CRITICAL_SECTION;
 
@@ -230,8 +235,6 @@ struct _RTL_CRITICAL_SECTION_DEBUG {
     WORD CreatorBackTraceIndexHigh;
     WORD SpareWORD;
 };
-
-typedef struct _OVERLAPPED * LPOVERLAPPED;
 
 typedef struct _EXCEPTION_POINTERS _EXCEPTION_POINTERS, *P_EXCEPTION_POINTERS;
 
@@ -307,9 +310,36 @@ struct _EXCEPTION_POINTERS {
     PCONTEXT ContextRecord;
 };
 
-typedef struct _SECURITY_ATTRIBUTES * LPSECURITY_ATTRIBUTES;
-
 typedef PTOP_LEVEL_EXCEPTION_FILTER LPTOP_LEVEL_EXCEPTION_FILTER;
+
+typedef struct _iobuf _iobuf, *P_iobuf;
+
+struct _iobuf {
+    char * _ptr;
+    int _cnt;
+    char * _base;
+    int _flag;
+    int _file;
+    int _charbuf;
+    int _bufsiz;
+    char * _tmpfname;
+};
+
+typedef struct _iobuf FILE;
+
+typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
+
+typedef uint size_t;
+
+typedef int errno_t;
+
+typedef WCHAR * LPWSTR;
+
+typedef WCHAR * PCNZWCH;
+
+typedef WCHAR * LPWCH;
+
+typedef WCHAR * LPCWSTR;
 
 typedef CHAR * LPCSTR;
 
@@ -329,14 +359,6 @@ struct _OSVERSIONINFOA {
 };
 
 typedef struct _OSVERSIONINFOA * LPOSVERSIONINFOA;
-
-typedef WCHAR * LPWSTR;
-
-typedef WCHAR * PCNZWCH;
-
-typedef WCHAR * LPWCH;
-
-typedef WCHAR * LPCWSTR;
 
 typedef DWORD LCID;
 
@@ -367,29 +389,29 @@ struct IMAGE_DOS_HEADER {
     byte e_program[176]; // Actual DOS program
 };
 
-typedef uint UINT_PTR;
-
 typedef ULONG_PTR SIZE_T;
 
-typedef int (* FARPROC)(void);
+typedef uint UINT_PTR;
 
 typedef DWORD * LPDWORD;
 
-typedef WORD * LPWORD;
-
 typedef struct HINSTANCE__ HINSTANCE__, *PHINSTANCE__;
+
+typedef struct HINSTANCE__ * HINSTANCE;
 
 struct HINSTANCE__ {
     int unused;
 };
 
+typedef HINSTANCE HMODULE;
+
+typedef int (* FARPROC)(void);
+
+typedef WORD * LPWORD;
+
 typedef BOOL * LPBOOL;
 
-typedef struct HINSTANCE__ * HINSTANCE;
-
 typedef void * LPCVOID;
-
-typedef HINSTANCE HMODULE;
 
 typedef struct IMAGE_OPTIONAL_HEADER32 IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;
 
@@ -545,23 +567,6 @@ struct IMAGE_NT_HEADERS32 {
     struct IMAGE_OPTIONAL_HEADER32 OptionalHeader;
 };
 
-typedef struct _iobuf _iobuf, *P_iobuf;
-
-struct _iobuf {
-    char * _ptr;
-    int _cnt;
-    char * _base;
-    int _flag;
-    int _file;
-    int _charbuf;
-    int _bufsiz;
-    char * _tmpfname;
-};
-
-typedef struct _iobuf FILE;
-
-typedef BOOL (* PHANDLER_ROUTINE)(DWORD);
-
 typedef struct CBaseEntity CBaseEntity, *PCBaseEntity;
 
 struct CBaseEntity { // PlaceHolder Structure
@@ -607,16 +612,6 @@ typedef struct CTalkMonster CTalkMonster, *PCTalkMonster;
 struct CTalkMonster { // PlaceHolder Structure
 };
 
-typedef struct CBaseTrigger CBaseTrigger, *PCBaseTrigger;
-
-struct CBaseTrigger { // PlaceHolder Structure
-};
-
-typedef struct CMultiManager CMultiManager, *PCMultiManager;
-
-struct CMultiManager { // PlaceHolder Structure
-};
-
 typedef struct CControllerZapBall CControllerZapBall, *PCControllerZapBall;
 
 struct CControllerZapBall { // PlaceHolder Structure
@@ -627,19 +622,9 @@ typedef struct CWallHealth CWallHealth, *PCWallHealth;
 struct CWallHealth { // PlaceHolder Structure
 };
 
-typedef struct CRevertSaved CRevertSaved, *PCRevertSaved;
-
-struct CRevertSaved { // PlaceHolder Structure
-};
-
 typedef struct CTentacle CTentacle, *PCTentacle;
 
 struct CTentacle { // PlaceHolder Structure
-};
-
-typedef struct CSittingScientist CSittingScientist, *PCSittingScientist;
-
-struct CSittingScientist { // PlaceHolder Structure
 };
 
 typedef struct CControllerHeadBall CControllerHeadBall, *PCControllerHeadBall;
@@ -647,52 +632,14 @@ typedef struct CControllerHeadBall CControllerHeadBall, *PCControllerHeadBall;
 struct CControllerHeadBall { // PlaceHolder Structure
 };
 
-typedef struct CFuncTrackTrain CFuncTrackTrain, *PCFuncTrackTrain;
-
-struct CFuncTrackTrain { // PlaceHolder Structure
-};
-
-typedef enum USE_TYPE {
-} USE_TYPE;
-
-typedef struct CRpgRocket CRpgRocket, *PCRpgRocket;
-
-struct CRpgRocket { // PlaceHolder Structure
-};
-
 typedef struct CItemSoda CItemSoda, *PCItemSoda;
 
 struct CItemSoda { // PlaceHolder Structure
 };
 
-typedef struct CCineMonster CCineMonster, *PCCineMonster;
-
-struct CCineMonster { // PlaceHolder Structure
-};
-
-typedef struct CTestEffect CTestEffect, *PCTestEffect;
-
-struct CTestEffect { // PlaceHolder Structure
-};
-
-typedef struct CGrenade CGrenade, *PCGrenade;
-
-struct CGrenade { // PlaceHolder Structure
-};
-
 typedef struct CGibShooter CGibShooter, *PCGibShooter;
 
 struct CGibShooter { // PlaceHolder Structure
-};
-
-typedef struct COsprey COsprey, *PCOsprey;
-
-struct COsprey { // PlaceHolder Structure
-};
-
-typedef struct CSentry CSentry, *PCSentry;
-
-struct CSentry { // PlaceHolder Structure
 };
 
 typedef struct CItem CItem, *PCItem;
@@ -705,24 +652,9 @@ typedef struct CEnvExplosion CEnvExplosion, *PCEnvExplosion;
 struct CEnvExplosion { // PlaceHolder Structure
 };
 
-typedef struct CRoach CRoach, *PCRoach;
-
-struct CRoach { // PlaceHolder Structure
-};
-
-typedef struct CSprite CSprite, *PCSprite;
-
-struct CSprite { // PlaceHolder Structure
-};
-
 typedef struct CFuncTrain CFuncTrain, *PCFuncTrain;
 
 struct CFuncTrain { // PlaceHolder Structure
-};
-
-typedef struct CBubbling CBubbling, *PCBubbling;
-
-struct CBubbling { // PlaceHolder Structure
 };
 
 typedef struct CSqueakGrenade CSqueakGrenade, *PCSqueakGrenade;
@@ -735,34 +667,9 @@ typedef struct CFrictionModifier CFrictionModifier, *PCFrictionModifier;
 struct CFrictionModifier { // PlaceHolder Structure
 };
 
-typedef struct CBreakable CBreakable, *PCBreakable;
-
-struct CBreakable { // PlaceHolder Structure
-};
-
-typedef struct CLegacyCineMonster CLegacyCineMonster, *PCLegacyCineMonster;
-
-struct CLegacyCineMonster { // PlaceHolder Structure
-};
-
 typedef struct CPendulum CPendulum, *PCPendulum;
 
 struct CPendulum { // PlaceHolder Structure
-};
-
-typedef struct CCrossbowBolt CCrossbowBolt, *PCCrossbowBolt;
-
-struct CCrossbowBolt { // PlaceHolder Structure
-};
-
-typedef struct CTriggerGravity CTriggerGravity, *PCTriggerGravity;
-
-struct CTriggerGravity { // PlaceHolder Structure
-};
-
-typedef struct CFlockingFlyer CFlockingFlyer, *PCFlockingFlyer;
-
-struct CFlockingFlyer { // PlaceHolder Structure
 };
 
 typedef struct CTriggerCamera CTriggerCamera, *PCTriggerCamera;
@@ -780,24 +687,9 @@ typedef struct CNodeViewer CNodeViewer, *PCNodeViewer;
 struct CNodeViewer { // PlaceHolder Structure
 };
 
-typedef struct CRecharge CRecharge, *PCRecharge;
-
-struct CRecharge { // PlaceHolder Structure
-};
-
 typedef struct CMortar CMortar, *PCMortar;
 
 struct CMortar { // PlaceHolder Structure
-};
-
-typedef struct CApacheHVR CApacheHVR, *PCApacheHVR;
-
-struct CApacheHVR { // PlaceHolder Structure
-};
-
-typedef struct CCineBlood CCineBlood, *PCCineBlood;
-
-struct CCineBlood { // PlaceHolder Structure
 };
 
 typedef struct CTriggerSave CTriggerSave, *PCTriggerSave;
@@ -805,19 +697,14 @@ typedef struct CTriggerSave CTriggerSave, *PCTriggerSave;
 struct CTriggerSave { // PlaceHolder Structure
 };
 
-typedef struct CFuncRotating CFuncRotating, *PCFuncRotating;
-
-struct CFuncRotating { // PlaceHolder Structure
-};
-
 typedef struct CFuncMortarField CFuncMortarField, *PCFuncMortarField;
 
 struct CFuncMortarField { // PlaceHolder Structure
 };
 
-typedef struct CFuncTrainControls CFuncTrainControls, *PCFuncTrainControls;
+typedef struct CBreakable CBreakable, *PCBreakable;
 
-struct CFuncTrainControls { // PlaceHolder Structure
+struct CBreakable { // PlaceHolder Structure
 };
 
 typedef struct CChangeLevel CChangeLevel, *PCChangeLevel;
@@ -835,19 +722,9 @@ typedef struct CSquidSpit CSquidSpit, *PCSquidSpit;
 struct CSquidSpit { // PlaceHolder Structure
 };
 
-typedef struct CBaseDelay CBaseDelay, *PCBaseDelay;
-
-struct CBaseDelay { // PlaceHolder Structure
-};
-
 typedef struct CBarnacle CBarnacle, *PCBarnacle;
 
 struct CBarnacle { // PlaceHolder Structure
-};
-
-typedef struct CTriggerEndSection CTriggerEndSection, *PCTriggerEndSection;
-
-struct CTriggerEndSection { // PlaceHolder Structure
 };
 
 typedef struct CMultiSource CMultiSource, *PCMultiSource;
@@ -865,11 +742,6 @@ typedef struct CSpeaker CSpeaker, *PCSpeaker;
 struct CSpeaker { // PlaceHolder Structure
 };
 
-typedef struct CBMortar CBMortar, *PCBMortar;
-
-struct CBMortar { // PlaceHolder Structure
-};
-
 typedef struct CCrowbar CCrowbar, *PCCrowbar;
 
 struct CCrowbar { // PlaceHolder Structure
@@ -878,11 +750,6 @@ struct CCrowbar { // PlaceHolder Structure
 typedef struct CNihilanthHVR CNihilanthHVR, *PCNihilanthHVR;
 
 struct CNihilanthHVR { // PlaceHolder Structure
-};
-
-typedef struct CScriptedSentence CScriptedSentence, *PCScriptedSentence;
-
-struct CScriptedSentence { // PlaceHolder Structure
 };
 
 typedef struct CSatchelCharge CSatchelCharge, *PCSatchelCharge;
@@ -895,19 +762,9 @@ typedef struct CBeam CBeam, *PCBeam;
 struct CBeam { // PlaceHolder Structure
 };
 
-typedef struct CHGruntRepel CHGruntRepel, *PCHGruntRepel;
-
-struct CHGruntRepel { // PlaceHolder Structure
-};
-
 typedef struct CLeech CLeech, *PCLeech;
 
 struct CLeech { // PlaceHolder Structure
-};
-
-typedef struct CBasePlayerAmmo CBasePlayerAmmo, *PCBasePlayerAmmo;
-
-struct CBasePlayerAmmo { // PlaceHolder Structure
 };
 
 typedef struct CMomentaryDoor CMomentaryDoor, *PCMomentaryDoor;
@@ -920,19 +777,9 @@ typedef struct CGib CGib, *PCGib;
 struct CGib { // PlaceHolder Structure
 };
 
-typedef struct CHornet CHornet, *PCHornet;
-
-struct CHornet { // PlaceHolder Structure
-};
-
 typedef struct CLaserSpot CLaserSpot, *PCLaserSpot;
 
 struct CLaserSpot { // PlaceHolder Structure
-};
-
-typedef struct CTriggerHurt CTriggerHurt, *PCTriggerHurt;
-
-struct CTriggerHurt { // PlaceHolder Structure
 };
 
 typedef struct CDecal CDecal, *PCDecal;
@@ -950,11 +797,6 @@ typedef struct CMonsterMaker CMonsterMaker, *PCMonsterMaker;
 struct CMonsterMaker { // PlaceHolder Structure
 };
 
-typedef struct CBasePlayer CBasePlayer, *PCBasePlayer;
-
-struct CBasePlayer { // PlaceHolder Structure
-};
-
 typedef struct CBaseToggle CBaseToggle, *PCBaseToggle;
 
 struct CBaseToggle { // PlaceHolder Structure
@@ -970,11 +812,6 @@ typedef struct CFuncPlat CFuncPlat, *PCFuncPlat;
 struct CFuncPlat { // PlaceHolder Structure
 };
 
-typedef struct CApache CApache, *PCApache;
-
-struct CApache { // PlaceHolder Structure
-};
-
 typedef struct CFuncTrackChange CFuncTrackChange, *PCFuncTrackChange;
 
 struct CFuncTrackChange { // PlaceHolder Structure
@@ -985,14 +822,187 @@ typedef struct CBaseTurret CBaseTurret, *PCBaseTurret;
 struct CBaseTurret { // PlaceHolder Structure
 };
 
-typedef struct CWeaponBox CWeaponBox, *PCWeaponBox;
-
-struct CWeaponBox { // PlaceHolder Structure
-};
-
 typedef struct CMomentaryRotButton CMomentaryRotButton, *PCMomentaryRotButton;
 
 struct CMomentaryRotButton { // PlaceHolder Structure
+};
+
+typedef struct CAirtank CAirtank, *PCAirtank;
+
+struct CAirtank { // PlaceHolder Structure
+};
+
+typedef struct CBaseTrigger CBaseTrigger, *PCBaseTrigger;
+
+struct CBaseTrigger { // PlaceHolder Structure
+};
+
+typedef struct CMultiManager CMultiManager, *PCMultiManager;
+
+struct CMultiManager { // PlaceHolder Structure
+};
+
+typedef struct CRevertSaved CRevertSaved, *PCRevertSaved;
+
+struct CRevertSaved { // PlaceHolder Structure
+};
+
+typedef struct CSittingScientist CSittingScientist, *PCSittingScientist;
+
+struct CSittingScientist { // PlaceHolder Structure
+};
+
+typedef struct CFuncTrackTrain CFuncTrackTrain, *PCFuncTrackTrain;
+
+struct CFuncTrackTrain { // PlaceHolder Structure
+};
+
+typedef struct CRpgRocket CRpgRocket, *PCRpgRocket;
+
+struct CRpgRocket { // PlaceHolder Structure
+};
+
+typedef enum USE_TYPE {
+} USE_TYPE;
+
+typedef struct CCineMonster CCineMonster, *PCCineMonster;
+
+struct CCineMonster { // PlaceHolder Structure
+};
+
+typedef struct CTestEffect CTestEffect, *PCTestEffect;
+
+struct CTestEffect { // PlaceHolder Structure
+};
+
+typedef struct CGrenade CGrenade, *PCGrenade;
+
+struct CGrenade { // PlaceHolder Structure
+};
+
+typedef struct COsprey COsprey, *PCOsprey;
+
+struct COsprey { // PlaceHolder Structure
+};
+
+typedef struct CSentry CSentry, *PCSentry;
+
+struct CSentry { // PlaceHolder Structure
+};
+
+typedef struct CRoach CRoach, *PCRoach;
+
+struct CRoach { // PlaceHolder Structure
+};
+
+typedef struct CSprite CSprite, *PCSprite;
+
+struct CSprite { // PlaceHolder Structure
+};
+
+typedef struct CBubbling CBubbling, *PCBubbling;
+
+struct CBubbling { // PlaceHolder Structure
+};
+
+typedef struct CLegacyCineMonster CLegacyCineMonster, *PCLegacyCineMonster;
+
+struct CLegacyCineMonster { // PlaceHolder Structure
+};
+
+typedef struct CCrossbowBolt CCrossbowBolt, *PCCrossbowBolt;
+
+struct CCrossbowBolt { // PlaceHolder Structure
+};
+
+typedef struct CTriggerGravity CTriggerGravity, *PCTriggerGravity;
+
+struct CTriggerGravity { // PlaceHolder Structure
+};
+
+typedef struct CFlockingFlyer CFlockingFlyer, *PCFlockingFlyer;
+
+struct CFlockingFlyer { // PlaceHolder Structure
+};
+
+typedef struct CRecharge CRecharge, *PCRecharge;
+
+struct CRecharge { // PlaceHolder Structure
+};
+
+typedef struct CApacheHVR CApacheHVR, *PCApacheHVR;
+
+struct CApacheHVR { // PlaceHolder Structure
+};
+
+typedef struct CCineBlood CCineBlood, *PCCineBlood;
+
+struct CCineBlood { // PlaceHolder Structure
+};
+
+typedef struct CFuncRotating CFuncRotating, *PCFuncRotating;
+
+struct CFuncRotating { // PlaceHolder Structure
+};
+
+typedef struct CFuncTrainControls CFuncTrainControls, *PCFuncTrainControls;
+
+struct CFuncTrainControls { // PlaceHolder Structure
+};
+
+typedef struct CBaseDelay CBaseDelay, *PCBaseDelay;
+
+struct CBaseDelay { // PlaceHolder Structure
+};
+
+typedef struct CTriggerEndSection CTriggerEndSection, *PCTriggerEndSection;
+
+struct CTriggerEndSection { // PlaceHolder Structure
+};
+
+typedef struct CBMortar CBMortar, *PCBMortar;
+
+struct CBMortar { // PlaceHolder Structure
+};
+
+typedef struct CScriptedSentence CScriptedSentence, *PCScriptedSentence;
+
+struct CScriptedSentence { // PlaceHolder Structure
+};
+
+typedef struct CHGruntRepel CHGruntRepel, *PCHGruntRepel;
+
+struct CHGruntRepel { // PlaceHolder Structure
+};
+
+typedef struct CBasePlayerAmmo CBasePlayerAmmo, *PCBasePlayerAmmo;
+
+struct CBasePlayerAmmo { // PlaceHolder Structure
+};
+
+typedef struct CHornet CHornet, *PCHornet;
+
+struct CHornet { // PlaceHolder Structure
+};
+
+typedef struct CTriggerHurt CTriggerHurt, *PCTriggerHurt;
+
+struct CTriggerHurt { // PlaceHolder Structure
+};
+
+typedef struct CBasePlayer CBasePlayer, *PCBasePlayer;
+
+struct CBasePlayer { // PlaceHolder Structure
+};
+
+typedef struct CApache CApache, *PCApache;
+
+struct CApache { // PlaceHolder Structure
+};
+
+typedef struct CWeaponBox CWeaponBox, *PCWeaponBox;
+
+struct CWeaponBox { // PlaceHolder Structure
 };
 
 typedef struct CLaser CLaser, *PCLaser;
@@ -1005,19 +1015,10 @@ typedef struct CEnvSpark CEnvSpark, *PCEnvSpark;
 struct CEnvSpark { // PlaceHolder Structure
 };
 
-typedef struct CAirtank CAirtank, *PCAirtank;
-
-struct CAirtank { // PlaceHolder Structure
-};
-
 typedef struct CBaseButton CBaseButton, *PCBaseButton;
 
 struct CBaseButton { // PlaceHolder Structure
 };
-
-typedef int errno_t;
-
-typedef uint size_t;
 
 
 
@@ -2897,7 +2898,7 @@ int __cdecl FUN_1009314f(char *param_1,byte *param_2,undefined4 *param_3);
 int __cdecl FUN_100931a0(char *param_1,int param_2,byte *param_3,undefined4 *param_4);
 undefined4 FUN_100931f0(undefined4 param_1,int param_2);
 int entry(undefined4 param_1,int param_2,undefined4 param_3);
-void __cdecl __amsg_exit(int param_1);
+void __cdecl __amsg_exit(int exitCode);
 void FUN_10093399(void);
 void FUN_100933c2(void);
 void __cdecl FUN_1009342e(int param_1);
@@ -2905,7 +2906,7 @@ void __cdecl FUN_1009348f(int param_1);
 int __cdecl _strcmp(char *_Str1,char *_Str2);
 void __thiscall FUN_10093544(void *this,uint *param_1,byte *param_2);
 size_t __cdecl _strlen(char *_Str);
-longlong __allmul(uint param_1,uint param_2,uint param_3,uint param_4);
+longlong __allmul(uint lowerBits1,uint upperBits1,uint lowerBits2,uint upperBits2);
 void __fastcall FUN_10093684(void *param_1);
 undefined4 FUN_10093696(void);
 void FUN_100936d4(void);
@@ -3046,8 +3047,8 @@ void FUN_1009a5fe(void);
 void FUN_1009a6b7(void);
 void __cdecl FUN_1009a750(byte *param_1,byte **param_2,byte *param_3,int *param_4,int *param_5);
 undefined4 * FUN_1009a904(void);
-void FUN_1009aa36(void);
-void __cdecl FUN_1009aa6f(DWORD param_1);
+void performExitRoutine(void);
+void __cdecl executeExitProcedure(DWORD exitCode);
 undefined4 __cdecl FUN_1009abf3(int param_1,int param_2);
 void __cdecl FUN_1009ac3c(int param_1,int param_2);
 undefined4 __cdecl FUN_1009ac92(int param_1,int param_2);
@@ -3076,7 +3077,7 @@ uint __thiscall FUN_1009b7f8(void *this,uint param_1);
 void __cdecl FUN_1009b8c3(undefined4 *param_1,int param_2,int param_3);
 int * __cdecl FUN_1009b93a(undefined4 param_1,undefined4 param_2,int *param_3,uint *param_4);
 void __cdecl FUN_1009b996(uint *param_1,uint *param_2);
-uint * __cdecl FUN_1009ba50(uint *param_1,uint *param_2);
+uint * __cdecl copyString(uint *destination,uint *source);
 uint * __cdecl FUN_1009ba60(uint *param_1,uint *param_2);
 undefined4 * __cdecl FUN_1009bb40(undefined4 *param_1,undefined4 *param_2,uint param_3);
 void __cdecl __fptrap(void);
@@ -3092,7 +3093,7 @@ int FUN_1009c175(int **param_1);
 void __cdecl FUN_1009c1d9(uint param_1,int *param_2,ushort *param_3);
 uint __cdecl FUN_1009c2a9(LPWSTR param_1,byte *param_2,uint param_3);
 uint __cdecl FUN_1009c306(LPWSTR param_1,byte *param_2,uint param_3);
-longlong __fastcall __allshl(byte param_1,int param_2);
+longlong __fastcall __allshl(byte shiftAmount,int upperBits);
 uint __cdecl FUN_1009c3ef(byte **param_1);
 uint __cdecl FUN_1009c4f4(uint param_1,char **param_2);
 float10 __cdecl FUN_1009c562(undefined8 param_1,short param_2);
